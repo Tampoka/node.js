@@ -15,18 +15,26 @@ function App() {
         axios.post('http://localhost:4000/users')
             .then(res => getUsers())
     }
+
+    const deleteUser = () => {
+        axios.delete('http://localhost:4000/users')
+            .then(res => getUsers())
+    }
     useEffect(() => {
         getUsers()
     }, [])
+
     return (
         <div className="App">
             <header className="App-header">
                 <img src={logo} className="App-logo" alt="logo"/>
                 <ul>
-                    Users:{state.map(u => <li key={u.id}>{u.name}</li>)}
+                    Users:{state.map(u => <li key={u.id}>{u.name}
+                </li>)}
                 </ul>
                 <div>
                     <button onClick={addUsers}>Add new user</button>
+                    <button onClick={deleteUser}>X</button>
                 </div>
             </header>
         </div>
