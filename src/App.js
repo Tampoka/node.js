@@ -15,17 +15,20 @@ function App() {
     const addUsers = (name) => {
         axios.post('http://localhost:4000/users', {name})
             .then(res => getUsers())
-        setName("")
+            .then(res=>setName(""))
     }
 
     const deleteUser = (id) => {
         axios.delete(`http://localhost:4000/users/${id}`)
-            .then(res => getUsers())
+            .then(() => getUsers())
     }
 
     const updateUser = (id) => {
-        axios.put(`http://localhost:4000/users/${id}`, {name})
+        const userName = name || "Anonymous"
+
+        axios.put(`http://localhost:4000/users/${id}`, {userName})
             .then(res => getUsers())
+            .then(()=>setName(""))
     }
 
     useEffect(() => {
@@ -40,9 +43,14 @@ function App() {
                 <ul style={{width: 300}}>
                     {state.map(u => <li key={u.id}
                                         style={{display: "flex", justifyContent: "space-between", paddingBottom: 10}}
-                                        onDoubleClick={() => updateUser(u.id, "Tanya")}
+                                        onDoubleClick={() => updateUser(u.id)}
                     >{u.name}
-                        {<button style={{marginLeft: 20}} onClick={() => deleteUser(u.id)}>X</button>}</li>)}
+                        <button
+                            style={{marginLeft: 20,padding:10}}
+                            onClick={() => deleteUser(u.id)}
+                        >X
+                        </button>
+                    </li>)}
                 </ul>
                 <div>
                     <input
@@ -51,7 +59,10 @@ function App() {
                         value={name}
                         onChange={(e) => setName(e.currentTarget.value)}
                     />
-                    <button onClick={() => addUsers(name)}>Add new user</button>
+                    <button onClick={() => addUsers(name)}
+                            disabled={!name}
+                    >Add new user
+                    </button>
                 </div>
             </header>
         </div>
