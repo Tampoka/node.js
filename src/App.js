@@ -8,14 +8,15 @@ function App() {
     const [name, setName] = useState("")
 
     const getUsers = () => {
-        axios.get('http://localhost:4000/users')
+
+        axios.get('http://localhost:4000/users'+window.location.search)
             .then(res => setState(res.data))
     }
 
     const addUsers = (name) => {
         axios.post('http://localhost:4000/users', {name})
             .then(res => getUsers())
-            .then(res=>setName(""))
+            .then(res => setName(""))
     }
 
     const deleteUser = (id) => {
@@ -28,7 +29,7 @@ function App() {
 
         axios.put(`http://localhost:4000/users/${id}`, {userName})
             .then(res => getUsers())
-            .then(()=>setName(""))
+            .then(() => setName(""))
     }
 
     useEffect(() => {
@@ -46,8 +47,8 @@ function App() {
                                         onDoubleClick={() => updateUser(u.id)}
                     >{u.name}
                         <button
-                            style={{marginLeft: 20,padding:10}}
-                            onClick={() => deleteUser(u.id)}
+                            style={{marginLeft: 20, padding: 10}}
+                            onClick={() => deleteUser(u._id)}
                         >X
                         </button>
                     </li>)}
