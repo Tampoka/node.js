@@ -3,31 +3,34 @@ import './App.css';
 import {useEffect, useState} from 'react';
 import axios from 'axios';
 
+// const baseUrl="https://zombi-first.herokuapp.com/users"
+const baseUrl="http://localhost:4000/users"
+
 function App() {
     const [state, setState] = useState([])
     const [name, setName] = useState("")
 
     const getUsers = () => {
 
-        axios.get('http://localhost:4000/users'+window.location.search)
+        axios.get(baseUrl+window.location.search)
             .then(res => setState(res.data))
     }
 
     const addUsers = (name) => {
-        axios.post('http://localhost:4000/users', {name})
+        axios.post(baseUrl, {name})
             .then(res => getUsers())
             .then(res => setName(""))
     }
 
     const deleteUser = (id) => {
-        axios.delete(`http://localhost:4000/users/${id}`)
+        axios.delete(`baseUrl/${id}`)
             .then(() => getUsers())
     }
 
     const updateUser = (id) => {
         const userName = name || "Anonymous"
 
-        axios.put(`http://localhost:4000/users/${id}`, {userName})
+        axios.put(`baseUrl/${id}`, {userName})
             .then(res => getUsers())
             .then(() => setName(""))
     }
@@ -35,6 +38,7 @@ function App() {
     useEffect(() => {
         getUsers()
     }, [])
+    console.log(state)
 
     return (
         <div className="App">
@@ -42,9 +46,9 @@ function App() {
                 <img src={logo} className="App-logo" alt="logo"/>
                 <p>Users:</p>
                 <ul style={{width: 300}}>
-                    {state.map(u => <li key={u.id}
+                    {state.map(u => <li key={u._id}
                                         style={{display: "flex", justifyContent: "space-between", paddingBottom: 10}}
-                                        onDoubleClick={() => updateUser(u.id)}
+                                        onDoubleClick={() => updateUser(u._id)}
                     >{u.name}
                         <button
                             style={{marginLeft: 20, padding: 10}}
