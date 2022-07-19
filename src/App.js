@@ -3,8 +3,8 @@ import './App.css';
 import {useEffect, useState} from 'react';
 import axios from 'axios';
 
-// const baseUrl="https://zombi-first.herokuapp.com/users"
-const baseUrl="http://localhost:4000/users"
+const baseUrl="https://zombi-first.herokuapp.com/users"
+// const baseUrl="http://localhost:4000/users"
 
 function App() {
     const [state, setState] = useState([])
@@ -23,14 +23,14 @@ function App() {
     }
 
     const deleteUser = (id) => {
-        axios.delete(`baseUrl/${id}`)
+        axios.delete(`${baseUrl}/${id}`)
             .then(() => getUsers())
     }
 
     const updateUser = (id) => {
         const userName = name || "Anonymous"
 
-        axios.put(`baseUrl/${id}`, {userName})
+        axios.put(`${baseUrl}/${id}`, {userName})
             .then(res => getUsers())
             .then(() => setName(""))
     }
