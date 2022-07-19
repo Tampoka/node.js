@@ -2,6 +2,7 @@ import logo from './logo.svg';
 import './App.css';
 import {useEffect, useState} from 'react';
 import axios from 'axios';
+import {instance} from './axios-instance';
 
 const baseUrl="https://zombi-first.herokuapp.com/users"
 // const baseUrl="http://localhost:4000/users"
@@ -12,7 +13,7 @@ function App() {
 
     const getUsers = () => {
 
-        axios.get(baseUrl+window.location.search)
+        instance.get(baseUrl+window.location.search)
             .then(res => setState(res.data))
     }
 
