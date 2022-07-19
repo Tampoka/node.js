@@ -4,7 +4,8 @@ import {useEffect, useState} from 'react';
 import axios from 'axios';
 import {instance} from './axios-instance';
 
-const baseUrl="https://zombi-first.herokuapp.com/users"
+const baseUrl = "https://zombi-first.herokuapp.com/users"
+
 // const baseUrl="http://localhost:4000/users"
 
 function App() {
@@ -12,26 +13,25 @@ function App() {
     const [name, setName] = useState("")
 
     const getUsers = () => {
-
-        instance.get(baseUrl+window.location.search)
+        instance.get(baseUrl + window.location.search)
             .then(res => setState(res.data))
     }
 
     const addUsers = (name) => {
-        axios.post(baseUrl, {name})
+        instance.post(baseUrl, {name})
             .then(res => getUsers())
             .then(res => setName(""))
     }
 
     const deleteUser = (id) => {
-        axios.delete(`${baseUrl}/${id}`)
+        instance.delete(`${baseUrl}/${id}`)
             .then(() => getUsers())
     }
 
     const updateUser = (id) => {
         const userName = name || "Anonymous"
 
-        axios.put(`${baseUrl}/${id}`, {userName})
+        instance.put(`${baseUrl}/${id}`, {userName})
             .then(res => getUsers())
             .then(() => setName(""))
     }
